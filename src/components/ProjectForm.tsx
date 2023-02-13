@@ -22,8 +22,17 @@ export const ProjectForm = () => {
 
     // GET DATE AND TIME
     const date_read = _date.slice(0, 10).replace("-", "").replace("-", "")
-    const time_read = _date.slice(11, 16).replace(":", "") + '00'
-    const time_end = ((parseInt(time_read.slice(0, 2)) + 1).toString() + time_read.slice(2, 6))
+    const time_end = _date.slice(11, 16).replace(":", "") + '00'
+    const time_read = time_end.slice(0,2) === "00" ?
+                        ((23).toString() + time_end.slice(2, 6))
+                            :
+                            time_end.slice(0,2) === "20" ?
+                            ((19).toString() + time_end.slice(2, 6))
+                                :
+                                time_end.slice(0,2) > "10"?
+                                    (time_end.slice(0, 1) + (parseInt(time_end.slice(1, 2)) - 1).toString() + time_end.slice(2, 6))
+                                    :
+                                    ("0" + (parseInt(time_end.slice(0, 2)) - 1).toString() + time_end.slice(2, 6))
 
 
     const fetchData = async () => {
